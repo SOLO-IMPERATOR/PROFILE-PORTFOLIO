@@ -43,7 +43,7 @@ jobs:
         with:
           host: 77.222.40.84
           username: 'soloimtech'
-          password: ${{ secrets.SSH_PASSWORD }} # Добавлены ${{ }}
+          key: ${{ secrets.SSH_KEY }} # Добавлены ${{ }}
           script: |
             cd /var/www/my-project
             git pull origin main
