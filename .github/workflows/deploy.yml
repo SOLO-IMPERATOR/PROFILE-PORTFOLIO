@@ -45,7 +45,6 @@ jobs:
           username: 'soloimtech'
           key: ${{ secrets.SSH_KEY }} # Добавлены ${{ }}
           script: |
-            cd /var/www/my-project
             git pull origin main
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
