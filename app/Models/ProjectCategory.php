@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Project;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProjectCategory extends Model
 {
@@ -12,7 +13,12 @@ class ProjectCategory extends Model
         'name'
     ];
 
-    public function projects(): HasMany{
-        return $this->hasMany(Project::class, 'category_id');
+    public function projects(): BelongsToMany{
+        return $this->belongsToMany(
+            Project::class,
+             'category_project',
+                    'category_project_id',
+                    'project_id'
+             );
     }
 }

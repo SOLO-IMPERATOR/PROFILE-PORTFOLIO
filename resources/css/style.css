@@ -1406,6 +1406,32 @@ ul { list-style: none; }
     transform: translateY(0);
 }
 
+/* Multiple overlay buttons — stack them */
+.project-overlay {
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Gallery thumbnail fills the card */
+.project-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-thumb {
+    transform: scale(1.08);
+}
+
+/* Reset border when used as button */
+.project-overlay-btn[type="button"] {
+    border: none;
+    cursor: pointer;
+}
+
 .project-info {
     padding: 24px;
 }

@@ -3,6 +3,9 @@
    Handles: preloader, nav, theme, i18n, animations, sections
    ============================================================ */
 
+import GLightbox from 'glightbox';
+import 'glightbox/dist/css/glightbox.css';
+
 (function () {
     'use strict';
 
@@ -43,6 +46,7 @@
         setupSkillTabs();
         setupSkillAnimations();
         setupPortfolioFilters();
+        setupGalleryLightbox();
         setupContactForm();
         setupTestimonialsSlider();
         setupCurrentYear();
@@ -365,14 +369,32 @@
                 btn.classList.add('active');
 
                 document.querySelectorAll('.project-card').forEach(card => {
-                    const cat = card.getAttribute('data-category');
-                    if (filter === 'all' || cat === filter) {
+                    const cats = (card.getAttribute('data-category') || '').split(' ');
+                    if (filter === 'all' || cats.includes(filter)) {
                         card.classList.remove('hidden');
                         card.style.animation = 'fade-in-up 0.5s ease forwards';
                     } else {
                         card.classList.add('hidden');
                     }
                 });
+            });
+        });
+    }
+
+    // ─── Portfolio Gallery Lightbox ───
+    function setupGalleryLightbox() {
+        document.querySelectorAll('.gallery-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                let elements;
+                try {
+                    elements = JSON.parse(btn.dataset.gallery || '[]');
+                } catch {
+                    return;
+                }
+                if (!elements.length) return;
+                const lb = GLightbox({ elements, loop: true, touchNavigation: true });
+                lb.open();
             });
         });
     }
@@ -499,6 +521,8 @@
     function renderProjects() {
         const container = document.getElementById('portfolioGrid');
         if (!container) return;
+        // Skip if projects are already server-rendered by Blade
+        if (container.children.length > 0) return;
         const data = PROJECTS_DATA[currentLang] || [];
         const viewText = I18N[currentLang]['portfolio.view'] || 'Visit Site';
 

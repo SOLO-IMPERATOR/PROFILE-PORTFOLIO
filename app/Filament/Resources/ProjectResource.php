@@ -3,15 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
-use App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Set;
+use Filament\Forms\Components\Actions\Action;
+
 
 class ProjectResource extends Resource
 {
@@ -38,15 +38,24 @@ class ProjectResource extends Resource
                 ->preload()
                 ->relationship('category','name')
                 ->placeholder('Выберите категорию')
+                ->multiple()
+                ->searchable()
                 ->createOptionForm([
                     Forms\Components\TextInput::make('name')->required()->label('Название')
                 ]),
 
                 Forms\Components\ColorPicker::make('background')
                 ->required()
-                ->label('Цвет фона'),
-
-                Forms\Components\TextInput::make('class-icon')
+                ->label('Цвет фона')
+                ->suffixAction(
+            Action::make('generateRandomColor')
+                        ->icon('heroicon-m-arrow-path')
+                        ->action(function (Set $set) {
+                            $randomColor = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+                            $set('background', $randomColor);
+                    })
+                ),
+                Forms\Components\TextInput::make('class_icon')
                 ->label('Иконка')
                 ->helperText('Класс font-awesome 6'),
 
@@ -84,6 +93,8 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('name')
                 //
             ])
             ->filters([

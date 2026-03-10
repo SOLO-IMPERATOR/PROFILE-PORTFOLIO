@@ -15,7 +15,8 @@ class Project extends Model
         'description',
         'url',
         'gallery',
-        'class-icon',
+        'class_icon',
+        'background',
         'category_id'
     ];
 
@@ -23,8 +24,12 @@ class Project extends Model
         'gallery' => 'array'
     ];
 
-    public function category() : BelongsTo {
-       return $this->belongsTo(ProjectCategory::class,'category_id');
+    public function category() : BelongsToMany {
+       return $this->belongsToMany(ProjectCategory::class,
+       'category_project',
+       'project_id',
+       'category_project_id'
+       );
     }
 
     public function tags(): BelongsToMany{

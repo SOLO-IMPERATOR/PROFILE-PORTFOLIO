@@ -279,24 +279,7 @@
         </div>
     </section>
 
-    <!-- ======================== PORTFOLIO SECTION ======================== -->
-    <section id="portfolio" class="section portfolio">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-tag" data-i18n="portfolio.tag">My work</span>
-                <h2 class="section-title" data-i18n="portfolio.title">Featured Projects</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
-                <button class="filter-btn active" data-filter="all" data-i18n="portfolio.filter_all">All</button>
-                <button class="filter-btn" data-filter="wordpress" data-i18n="portfolio.filter_wordpress">WordPress</button>
-                <button class="filter-btn" data-filter="ecommerce" data-i18n="portfolio.filter_ecommerce">E-Commerce</button>
-            </div>
-            <div class="portfolio-grid" id="portfolioGrid">
-                <!-- Projects populated by JS -->
-            </div>
-        </div>
-    </section>
+    <x-projects.section :categories="$categoriesProject" :projects="$projects" />
 
 
     <!-- ======================== TESTIMONIALS SECTION ======================== -->
