@@ -17,8 +17,17 @@ class CategoryAbillityResource extends Resource
 {
     protected static ?string $model = CategoryAbillity::class;
 
-    protected static ?string $navigationGroup = "Ability";
+    protected static ?string $navigationGroup = "Навыки";
+
+    protected static ?string $label = "Категории навыков";
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+
+    public static function getPluralLabel(): ?string
+    {
+        return "Категории навыков";
+    }
 
     public static function form(Form $form): Form
     {

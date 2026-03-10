@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name')->required();
+            $table->string('description')->required();
+            $table->string('url')->nullable();
+            $table->json('gallery')->nullable();
+            $table->string('class_icon')->nullable();
+            $table->foreignId('category_id')->constrained('project_categories')->onDelete('cascade');
         });
     }
 

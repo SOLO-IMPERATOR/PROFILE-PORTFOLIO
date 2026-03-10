@@ -17,8 +17,15 @@ class AbillityResource extends Resource
 {
     protected static ?string $model = Abillity::class;
 
-    protected static ?string $navigationGroup = "Ability";
+    protected static ?string $navigationGroup = "Навыки";
+
+    protected static ?string $label = "Навыки";
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+        public static function getPluralLabel(): ?string
+    {
+        return "Навыки";
+    }
 
     public static function form(Form $form): Form
     {

@@ -34,6 +34,9 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make('Ability')
                 ->label('Навыки')
+                ->collapsed(),
+                NavigationGroup::make('Project')
+                ->label('Проекты')
                 ->collapsed()
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
