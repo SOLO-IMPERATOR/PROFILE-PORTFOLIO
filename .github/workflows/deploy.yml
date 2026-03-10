@@ -43,7 +43,7 @@ jobs:
         with:
           host: 77.222.40.84
           username: "soloimtech"
-          key: ${{ secrets.SSH_PASSWORD }} # Добавлены ${{ }}
+          key: ${{ secrets.SSH_KEY }} # Добавлены ${{ }}
           script: |
             git pull origin main
             composer install --no-dev --optimize-autoloader
