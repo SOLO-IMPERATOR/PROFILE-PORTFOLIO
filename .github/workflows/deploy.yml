@@ -2,36 +2,36 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4 # Сначала скачиваем код, потом ставим PHP!
-    
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2 # Используй актуальную версию экшена
-      with:
-        php-version: '8.4'
-        extensions: mbstring, xml, ctype, iconv, sqlite3 # Нужные расширения
+      - uses: actions/checkout@v4 # Сначала скачиваем код, потом ставим PHP!
 
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2 # Используй актуальную версию экшена
+        with:
+          php-version: "8.4"
+          extensions: mbstring, xml, ctype, iconv, sqlite3 # Нужные расширения
 
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Generate key
-      run: php artisan key:generate
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: Execute tests
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: ":memory:" # Тесты в памяти работают в разы быстрее
-      run: php artisan test
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Execute tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:" # Тесты в памяти работают в разы быстрее
+        run: php artisan test
 
   deploy-server:
     runs-on: ubuntu-latest
@@ -42,12 +42,14 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3 # Исправлено название
         with:
           host: 77.222.40.84
-          username: 'soloimtech'
+          username: "soloimtech"
           key: ${{ secrets.SSH_PASSWORD }} # Добавлены ${{ }}
           script: |
             cd /var/www/my-project
             git pull origin main
             composer install --no-dev --optimize-autoloader
+            npm ci --prefer-offline
+            npm run build
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
