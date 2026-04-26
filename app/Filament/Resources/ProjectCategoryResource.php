@@ -27,7 +27,11 @@ class ProjectCategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                 ->required()
-                ->label('Название категории')
+                ->label('Название категории (RU)'),
+                Forms\Components\TextInput::make('name_en')
+                ->nullable()
+                ->label('Category name (EN)')
+                ->placeholder('English translation')
             ]);
     }
 

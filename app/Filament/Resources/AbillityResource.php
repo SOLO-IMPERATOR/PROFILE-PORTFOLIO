@@ -32,8 +32,12 @@ class AbillityResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                ->label('Название')
+                ->label('Название (RU)')
                 ->required(),
+                Forms\Components\TextInput::make('name_en')
+                ->label('Name (EN)')
+                ->nullable()
+                ->placeholder('English translation'),
                 Forms\Components\TextInput::make('level')
                 ->label('Уровень навыка')
                 ->suffix('%')

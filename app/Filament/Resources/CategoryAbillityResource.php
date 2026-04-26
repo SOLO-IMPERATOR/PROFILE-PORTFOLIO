@@ -35,7 +35,9 @@ class CategoryAbillityResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('is_active')
                 ->label('Активность'),
-                Forms\Components\TextInput::make('name')->required()->label('Название'),
+                Forms\Components\TextInput::make('name')->required()->label('Название (RU)'),
+                Forms\Components\TextInput::make('name_en')->nullable()->label('Name (EN)')->placeholder('English translation'),
+
                 Forms\Components\Section::make([
                     Forms\Components\TextInput::make('class_icon')
                     ->helperText('Нужно подставить класс иконки Font Awesome 6')

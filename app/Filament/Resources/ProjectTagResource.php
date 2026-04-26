@@ -26,7 +26,11 @@ class ProjectTagResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                 ->required()
-                ->label('Имя тега')
+                ->label('Имя тега (RU)'),
+                Forms\Components\TextInput::make('name_en')
+                ->nullable()
+                ->label('Tag name (EN)')
+                ->placeholder('English translation')
             ]);
     }
 
