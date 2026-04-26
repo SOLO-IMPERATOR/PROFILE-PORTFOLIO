@@ -18,15 +18,15 @@
                         'skill-tab',
                         'active' => $loop->first
                     ])
-                    data-category="{{ $category->name }}">
+                    data-category="{{ \Illuminate\Support\Str::slug($category->name) }}">
                         @if($category->class_icon)
                             <i class="{{ $category->class_icon }}"></i>
                         @elseif($category->svg)
                             {!! $category->svg !!}
                         @else
-                            <img src="{{ $category->image }}" alt="{{ $category->name }}"
+                            <img src="{{ $category->image }}" alt="{{ $category->name_en ?? $category->name }}"
                         @endif
-                        <span>{{ $category->name }}</span>
+                        <span data-lang-ru="{{ $category->name }}" data-lang-en="{{ $category->name_en ?? $category->name }}">{{ $category->name }}</span>
                     </button>
                 @endforeach
             </div>

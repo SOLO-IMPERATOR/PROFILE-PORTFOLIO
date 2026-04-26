@@ -12,13 +12,31 @@ class Project extends Model
 {
     protected $fillable = [
         'name',
+        'name_en',
         'description',
+        'description_en',
         'url',
         'gallery',
         'class_icon',
         'background',
         'category_id'
     ];
+
+    public function getLocalizedName(): string
+    {
+        if (app()->getLocale() === 'en' && $this->name_en) {
+            return $this->name_en;
+        }
+        return $this->name;
+    }
+
+    public function getLocalizedDescription(): string
+    {
+        if (app()->getLocale() === 'en' && $this->description_en) {
+            return $this->description_en;
+        }
+        return $this->description ?? '';
+    }
 
     protected $casts = [
         'gallery' => 'array'

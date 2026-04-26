@@ -8,8 +8,17 @@ use App\Models\Project;
 class ProjectTag extends Model
 {
     protected $fillable = [
-        'name'
+        'name',
+        'name_en',
     ];
+
+    public function getLocalizedName(): string
+    {
+        if (app()->getLocale() === 'en' && $this->name_en) {
+            return $this->name_en;
+        }
+        return $this->name;
+    }
 
     public function projects(): BelongsToMany{
         return $this->belongsToMany(

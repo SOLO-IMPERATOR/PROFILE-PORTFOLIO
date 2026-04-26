@@ -10,8 +10,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class ProjectCategory extends Model
 {
     protected $fillable = [
-        'name'
+        'name',
+        'name_en',
     ];
+
+    public function getLocalizedName(): string
+    {
+        if (app()->getLocale() === 'en' && $this->name_en) {
+            return $this->name_en;
+        }
+        return $this->name;
+    }
 
     public function projects(): BelongsToMany{
         return $this->belongsToMany(

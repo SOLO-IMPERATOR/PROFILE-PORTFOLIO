@@ -112,6 +112,19 @@ import 'glightbox/dist/css/glightbox.css';
             }
         });
 
+        // Translate DB-driven text elements (skills, projects)
+        document.querySelectorAll('[data-lang-ru]').forEach(el => {
+            el.textContent = lang === 'ru' ? el.dataset.langRu : (el.dataset.langEn || el.dataset.langRu);
+        });
+
+        // Show/hide HTML content blocks (project descriptions with markup)
+        document.querySelectorAll('.lang-content').forEach(el => {
+            const isRu = el.classList.contains('lang-ru');
+            const isEn = el.classList.contains('lang-en');
+            if (isRu) el.style.display = lang === 'ru' ? '' : 'none';
+            if (isEn) el.style.display = lang === 'en' ? '' : 'none';
+        });
+
         // Update active lang button
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);

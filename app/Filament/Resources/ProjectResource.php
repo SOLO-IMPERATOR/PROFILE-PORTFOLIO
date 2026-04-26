@@ -25,12 +25,25 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                ->required()
-                ->label('Название'),
-                Forms\Components\RichEditor::make('description')
-                ->label('Описание')
-                ->required(),
+                Forms\Components\Section::make('Название')
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->label('Название (RU)'),
+                    Forms\Components\TextInput::make('name_en')
+                    ->nullable()
+                    ->label('Name (EN)')
+                    ->placeholder('English translation'),
+                ])->columns(2),
+                Forms\Components\Section::make('Описание')
+                ->schema([
+                    Forms\Components\RichEditor::make('description')
+                    ->label('Описание (RU)')
+                    ->required(),
+                    Forms\Components\RichEditor::make('description_en')
+                    ->label('Description (EN)')
+                    ->nullable(),
+                ])->columns(1),
                 
                 Forms\Components\Select::make('category_id')
                 ->label('Категория')
