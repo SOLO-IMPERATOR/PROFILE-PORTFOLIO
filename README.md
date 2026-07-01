@@ -2,7 +2,7 @@
 
 Backend и админка персонального портфолио [Dmitrii Levchenko](https://soloimperator.tech/).
 
-Публичный репозиторий как **демонстрация подхода к разработке**. Основная коммерческая работа — проекты под NDA.
+Публичный репозиторий — **витрина кода**, не open-source проект. Основная коммерческая работа — проекты под NDA.
 
 ## О проекте
 
@@ -17,63 +17,26 @@ Laravel-приложение с Filament-админкой для управле�
 | Backend | PHP 8.2+, Laravel 12 |
 | Admin | Filament 3 |
 | Frontend | Blade, Vite, JavaScript |
-| i18n | RU / EN (клиентский i18n + локализованные поля в БД) |
-| Интеграции | Telegram (уведомления с формы обратной связи) |
-| CI/CD | GitHub Actions (тесты + deploy) |
+| i18n | RU / EN |
+| Интеграции | Telegram (форма обратной связи) |
+| CI/CD | GitHub Actions |
 
 ## Возможности
 
-- **Filament CMS** — CRUD для проектов, навыков, категорий и тегов
-- **Двуязычность** — переключение RU/EN на сайте, локализованные названия и описания в моделях
+- **Filament CMS** — управление проектами, навыками, категориями и тегами
+- **Двуязычность** — RU/EN на сайте и в контенте из БД
 - **Портфолио** — фильтрация проектов, галерея (GLightbox)
-- **Форма контакта** — отправка заявок в Telegram через backend API
-- **Автодеплой** — push в `main` → тесты → деплой на сервер
+- **Форма контакта** — уведомления в Telegram
 
 ## Структура
 
 ```
-app/Filament/Resources/   # Админ-панель (проекты, навыки, категории)
+app/Filament/Resources/   # Админ-панель
 app/Http/Controllers/     # HomeController, ContactController
 app/Models/               # Project, Abillity, Category, Tag
-resources/views/          # Blade-шаблоны сайта
-resources/js/             # i18n, анимации, UI-логика
+resources/views/          # Blade-шаблоны
+resources/js/             # i18n, UI-логика
 ```
-
-## Локальный запуск
-
-```bash
-git clone https://github.com/SOLO-IMPERATOR/PROFILE-PORTFOLIO.git
-cd PROFILE-PORTFOLIO
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-npm install && npm run build
-php artisan serve
-```
-
-Админка Filament: `/admin` (пользователь: `php artisan make:filament-user`).
-
-### Переменные окружения
-
-```env
-TELEGRAM_BOT_TOKEN=   # токен бота от @BotFather
-TELEGRAM_CHAT_ID=      # ID чата для уведомлений
-```
-
-> **Важно:** если токен бота ранее был в публичном JS — отзови его в @BotFather и создай новый.
-
-## Деплой (GitHub Actions)
-
-В secrets репозитория должны быть:
-
-| Secret | Описание |
-|--------|----------|
-| `SSH_KEY` | Приватный SSH-ключ для сервера |
-| `DEPLOY_HOST` | IP или hostname сервера |
-| `DEPLOY_USER` | SSH-пользователь |
-
-На сервере в `.env` пропиши `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID`.
 
 ## Об авторе
 
@@ -88,4 +51,4 @@ TELEGRAM_CHAT_ID=      # ID чата для уведомлений
 
 ## Примечание
 
-Коммерческие проекты закрыты NDA. Этот репозиторий — публичный пример: личный сайт-портфолио.
+Коммерческие проекты закрыты NDA. Этот репозиторий — единственный публичный пример: личный сайт-портфолио.
