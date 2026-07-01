@@ -21,3 +21,13 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Server / tooling artifacts (do not commit)
+/cache/
+composer.phar
+storage.zip
+.bash_history
+.authfile
+keys.dev.pub
+keys.tags.pub
+.subversion/

@@ -412,14 +412,13 @@ import 'glightbox/dist/css/glightbox.css';
         });
     }
 
-    // ─── Contact Form → Telegram Bot ───
-    const TG_TOKEN = '8597544151:AAFIOtUCijpM7F9duodC3SPrbZorRn9rw6c';
-    const TG_CHAT  = '2072687165';
-
+    // ─── Contact Form → Laravel backend → Telegram ───
     function setupContactForm() {
         const form = document.getElementById('contactForm');
         const success = document.getElementById('formSuccess');
         if (!form) return;
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -430,29 +429,25 @@ import 'glightbox/dist/css/glightbox.css';
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>${sendingText}</span>`;
             btn.disabled = true;
 
-            const name    = form.querySelector('#name').value.trim();
-            const email   = form.querySelector('#email').value.trim();
-            const subject = form.querySelector('#subject').value.trim();
-            const message = form.querySelector('#message').value.trim();
-
-            const text = `📩 <b>New message from portfolio</b>\n\n` +
-                `<b>Name:</b> ${name}\n` +
-                `<b>Email:</b> ${email}\n` +
-                `<b>Subject:</b> ${subject}\n\n` +
-                `<b>Message:</b>\n${message}`;
+            const payload = {
+                name: form.querySelector('#name').value.trim(),
+                email: form.querySelector('#email').value.trim(),
+                subject: form.querySelector('#subject').value.trim(),
+                message: form.querySelector('#message').value.trim(),
+            };
 
             try {
-                const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+                const res = await fetch('/contact', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TG_CHAT,
-                        text: text,
-                        parse_mode: 'HTML'
-                    })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken || '',
+                    },
+                    body: JSON.stringify(payload),
                 });
 
-                if (!res.ok) throw new Error('Telegram API error');
+                if (!res.ok) throw new Error('Contact API error');
 
                 form.style.display = 'none';
                 success.style.display = 'block';

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Primary SEO Meta Tags -->
     <title>Dmitrii Levchenko — PHP Developer | Laravel, WordPress, 1C-Bitrix | Hire Freelance Web Developer</title>
